@@ -18,17 +18,15 @@ def compute_hog(img,output_file_name):
     w,h=np.shape(gradient_img_x)
     oriented_img=np.zeros((w,h))
 
-    #compute gradient orientation for each pixel, should be able to vectorise for faster computation
-    for row in range(0,h):
-        for col in range(0,w):
-            oriented_img[row,col]=np.arctan(gradient_img_y[row,col]/gradient_img_x[row,col])
-            oriented_img[row,col]=np.floor(np.abs(oriented_img[row,col]/quadrant_resolution))
-            if gradient_img_x[row,col]<0 and gradient_img_y[row,col]>0:
-                oriented_img[row,col]=oriented_img[row,col]+8
-            elif gradient_img_x[row,col]<0 and gradient_img_y[row,col]<0:
-                oriented_img[row,col]=oriented_img[row,col]+16
-            elif gradient_img_x[row,col]>0 and gradient_img_y[row,col]<0:
-                oriented_img[row,col]=oriented_img[row,col]+24
+    #compute gradient orientation for each pixel
+    oriented_img=np.arctan(gradient_img_y/gradient_img_x)
+    oriented_img=np.floor(np.abs(oriented_img/quadrant_resolution))
+    mask=(gradient_img_x<0) & (gradient_img_y>0)
+    oriented_img[mask]=oriented_img[mask]+8
+    mask=(gradient_img_x<0) & (gradient_img_y<0)
+    oriented_img[mask]=oriented_img[mask]+16
+    mask=(gradient_img_x>0) & (gradient_img_y<0)
+    oriented_img[mask]=oriented_img[mask]+24
 
     #scaling back for visualisation
     min_oriented_img=np.min(oriented_img)
