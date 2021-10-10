@@ -4,3 +4,6 @@
 the raw script can be executed with python3 histogram_of_oriented_gradient.py motion.tiff hog.jpg where hog.jpg is an interim output for visualisation.
 motion.tiff from https://sipi.usc.edu/database/database.php?volume=misc&image=8#top
 
+#simple implementation of kmeans
+can run with python3 kmeans.py 100 2 3
+
