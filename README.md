@@ -7,3 +7,7 @@ motion.tiff from https://sipi.usc.edu/database/database.php?volume=misc&image=8#
 #simple implementation of kmeans
 can run with python3 kmeans.py 100 2 3
 
+#simple implementation of merge sort in c++
+to compile: g++ -o merge_sort merge_sort.cpp
+to run: ./merge_sort
+
