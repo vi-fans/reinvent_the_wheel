@@ -11,3 +11,6 @@ can run with python3 kmeans.py 100 2 3
 to compile: g++ -o merge_sort merge_sort.cpp
 to run: ./merge_sort
 
+#simple gradient descent
+as shown, learning rate can be specified, to run: python3 gradient_descent.py 0.1
+
