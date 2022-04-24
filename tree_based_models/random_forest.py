@@ -101,18 +101,37 @@ def check_forest_fit(x,y,decision_tree):
     return accuracy
 
 if __name__=='__main__':
-    for i in range(10):
-        #generate random dataset
-        x=np.floor(np.random.rand(10000,8)/0.3)
-        y=np.floor(np.random.rand(10000)/0.3)
+    np.random.seed(0)
+    for i in range(2):
+        #generate a dataset
+        x_train=np.floor(np.random.rand(5000,8)/0.5)*2
+        x_test=np.floor(np.random.rand(5000,8)/0.5)*4
+        x=np.concatenate((x_train,x_test),axis=0)
 
-        print(x,y)
+        y=np.concatenate((np.ones((5000,1)),np.zeros((5000,1))),axis=0)
 
-        decision_tree=create_decision_tree(x,y,np.shape(x)[1])
-        print('training accuracy (decision tree):',check_fit(x,y,decision_tree))
+        xy=np.concatenate((x,y),axis=1)
+        np.random.shuffle(xy)
+        x=xy[:,0:8]
+        y=xy[:,8]
+
+        x_train=x[:5000,:]
+        x_test=x[5000:,:]
+        y_train=y[:5000]
+        y_test=y[5000:]
+
+        decision_tree=create_decision_tree(x_train,y_train,np.shape(x_train)[1])
+        print('training accuracy (decision tree):',check_fit(x_train,y_train,decision_tree))
+        print('testing accuracy (decision tree):',check_fit(x_test,y_test,decision_tree))
 #        print('decision tree:',decision_tree)
         forest=create_forest(x,y)
-        print('training accuracy (random forest):',check_forest_fit(x,y,forest))
+        print('training accuracy (random forest):',check_forest_fit(x_train,y_train,forest))
+        print('testing accuracy (random forest):',check_forest_fit(x_test,y_test,forest))
         print('\n')
     
-
+        from sklearn.ensemble import RandomForestClassifier
+        m=RandomForestClassifier(random_state=0)
+        m.fit(x_train,y_train)
+        print(m.score(x_train,y_train))
+        print(m.score(x_test,y_test))
+    
