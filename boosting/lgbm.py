@@ -1,5 +1,5 @@
 #reference: https://proceedings.neurips.cc/paper/4017/file/6449f44a102fde848669bdd9eb6b76fa-Paper.pdf
-#goss+efb
+#goss+efb, slightly customised
 
 import sys
 import time
